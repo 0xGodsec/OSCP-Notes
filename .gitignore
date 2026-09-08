@@ -1,0 +1,5 @@
+# Obsidian volatile / per-session state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
