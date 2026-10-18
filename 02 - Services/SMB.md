@@ -69,6 +69,10 @@ smbclient -N -L //$IP/                            # classic anonymous share list
 ```
 
 ```bash
+smbmap -H $IP                                     # shares + PERMISSIONS column (READ/WRITE at a glance)
+```
+
+```bash
 # 3) Known-CVE quick check
 nmap -p445 --script smb-vuln-ms17-010 $IP        # EternalBlue
 ```
@@ -98,6 +102,22 @@ smbclient -N //$IP/ShareName
 ```bash
 # Recursive spidering without going interactive
 netexec smb $IP -u '' -p '' -M spider_plus                     # dumps a JSON map of every file
+```
+
+```bash
+smbmap -H $IP -R                                               # recurse EVERY readable share, list all files
+```
+
+```bash
+smbmap -H $IP -u user -p pass -R ShareName                     # recurse one share (authenticated)
+```
+
+```bash
+smbmap -H $IP -u user -p pass --download 'ShareName\path\to\file'   # pull a single file
+```
+
+```bash
+smbmap -H $IP -u user -p pass -x 'whoami'                      # command exec if the account is admin
 ```
 
 ```bash
@@ -161,6 +181,16 @@ nmap -p139,445 --script smb-os-discovery,smb2-security-mode,smb-protocols $IP
 ```
 - **What:** identifies OS build, hostname, domain/workgroup, supported dialects, whether signing is required.
 - **Look for:** old Windows builds (Server 2008/7 → MS17-010), `Message signing: disabled/not required` (relay), a **domain** name (→ AD).
+
+### NetBIOS name (137/udp) — hostname + role from the name table
+```bash
+nmblookup -A $IP            # name table: <20>=file server, <1C>=domain controller, <00>=workstation
+```
+
+```bash
+nbtscan -r $IP/24           # sweep a subnet for NetBIOS names + MACs (fast internal host map)
+```
+- **Why:** gives the hostname/workgroup even when 445 is locked down, and the `<1C>` suffix flags a **domain controller** → [[Active Directory]].
 
 ### Share listing (anonymous)
 ```bash
@@ -455,7 +485,8 @@ Open 445
 | `--users` blocked | Use `--rid-brute` (SID walking) — different code path, often still works |
 | Null session refused entirely | Hardened box — pivot to finding creds elsewhere, then return |
 | `smbclient` protocol negotiation error | Add `-m SMB2` / `-m SMB3`, or `--option='client min protocol=NT1'` for SMBv1 boxes |
-| netexec says nothing useful | Fall back to `enum4linux-ng -A` and raw `nmap --script smb-enum-*` |
+| netexec says nothing useful | Fall back to `smbmap -H $IP -R`, `enum4linux-ng -A`, and raw `nmap --script smb-enum-*` |
+| Shares list but perms unclear | `smbmap -H $IP` shows the READ/WRITE column `smbclient` doesn't |
 | Brute locks accounts | Stop. Check `--pass-pol`, switch to slow single-password spray |
 | ms17-010 script inconclusive | Try the Metasploit `smb_ms17_010` *auxiliary scanner*; check exact OS/patch level |
 | EternalBlue crashes target | Use a smaller/named-pipe variant; verify LHOST/LPORT; try wmiexec if you have creds instead |
@@ -591,6 +622,14 @@ nmap -p139,445 --script smb-os-discovery,smb2-security-mode $IP
 ```bash
 # Anonymous enum
 smbclient -N -L //$IP/
+```
+
+```bash
+smbmap -H $IP ; smbmap -H $IP -R        # shares + perms, then recurse readable ones
+```
+
+```bash
+nmblookup -A $IP                        # NetBIOS name table (<1C> = DC)
 ```
 
 ```bash

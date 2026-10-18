@@ -50,6 +50,11 @@ snmpwalk -v2c -c public $IP > snmp_full.txt
 ```
 
 ```bash
+# FASTER full walk — bulk requests, far less UDP loss/timeout on big trees (prefer this for the full dump)
+snmpbulkwalk -v2c -c public -Cr1000 $IP .1 > snmp_full.txt
+```
+
+```bash
 grep -iE 'pass|pwd|cred|user|login|key' snmp_full.txt
 ```
 
@@ -110,7 +115,8 @@ SNMP -> software version -> searchsploit -> exploit that service  ✅
 |---|---|
 | Nothing on `public` | Brute community strings (`onesixtyone`); try `private`, vendor defaults |
 | Port not seen | You forgot **UDP** — `sudo nmap -sU -p161`; UDP scans are slow/lossy, retry |
-| snmpwalk times out | UDP loss — retry, add `-r 1 -t 5`, or use `snmp-check` |
+| snmpwalk times out | UDP loss — use `snmpbulkwalk` (bulk requests, fewer round-trips), add `-r 1 -t 5`, or use `snmp-check` |
+| Only part of the tree returns | `snmpwalk` stopped early — re-run with `snmpbulkwalk ... .1`; try `-v1` if `-v2c` misbehaves |
 | v3 only | Needs username+auth — usually skip unless you have SNMPv3 creds |
 
 ## 📋 REFERENCE — mistakes · don't-miss · stop
@@ -130,6 +136,10 @@ onesixtyone -c /usr/share/seclists/Discovery/SNMP/common-snmp-community-strings.
 
 ```bash
 snmpwalk -v2c -c public $IP > walk.txt
+```
+
+```bash
+snmpbulkwalk -v2c -c public -Cr1000 $IP .1 > walk.txt   # faster full dump, less UDP loss
 ```
 
 ```bash
