@@ -13,7 +13,15 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Working hub: 
 - [x] [[AD Lateral Movement]] — psexec/wmiexec/evil-winrm/PtH
 - [x] [[AD ACL Abuse]] — GenericAll/WriteDACL/ForceChangePassword/AddMember
 - [x] [[DCSync & Domain Dominance]] — DCSync/NTDS/Golden Ticket
+- [x] [[ADCS (Certipy)]] — certificate template abuse (ESC1/ESC8…) → cert → NT hash
 
 ## Order
 identify DC → /etc/hosts + clock → user enum → AS-REP/spray → foothold cred → Kerberoast + BloodHound → lateral/local admin → DCSync → Golden Ticket.
 Condensed commands: [[Active Directory Cheat Sheet]]. Related: [[Kerberos]] · [[LDAP]] · [[SMB]].
+
+## Domain foothold → domain control
+1. Confirm the DC, configure DNS/name resolution, and fix clock skew.
+2. Enumerate users and domain data; only then test the appropriate unauthenticated or credentialed route.
+3. Obtain one domain credential, then immediately run [[Kerberoasting]] and [[BloodHound]] in parallel.
+4. Use the shortest evidenced lateral/ACL route—not every technique—until privileged control is reached.
+5. Capture proof, then re-test recovered credentials across hosts with [[Credential Attacks]].
