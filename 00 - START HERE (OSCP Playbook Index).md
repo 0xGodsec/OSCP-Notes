@@ -36,7 +36,6 @@
 | 512/513/514 | R-services | [[R-services]] | 🟢 Situational |
 | 1433 | MSSQL | [[MSSQL]] | 🟡 Medium |
 | 1521 | Oracle DB | [[Oracle TNS]] | 🟢 Situational |
-| 2049 | NFS | [[NFS]] | 🟡 Medium |
 | 3306 | MySQL | [[MySQL]] | 🟡 Medium |
 | 3389 | RDP | [[RDP]] | 🟡 Medium |
 | 5432 | PostgreSQL | [[PostgreSQL]] | 🟢 Situational |
@@ -86,7 +85,7 @@ These are linked from every service note. They hold the shared techniques so ser
 **Flow on a box:** `00 - OSCP Methodology` (process) → `01 - Recon` (scan) → `02 - Services` (per open port) → `03 - Initial Access` (get a shell) → `04/05` PrivEsc (+ `06` if AD) → loop with `07 - Credentials`. `08` and `09` support every stage; `10` is your exam-day quick reference.
 
 ## 📚 Reference Library
-- [[_MOC (Cheatsheets)|📚 Cheatsheets — PDF reference library]] — 73 third-party study PDFs (Linux/Windows PrivEsc, AD, web, pivoting, methodology, walkthroughs) in `99 - Attachments/Cheetsheets/`, mapped to the vault notes they support.
+- [[_MOC (Cheatsheets)|📚 Cheatsheets — PDF reference library]] — 71 study PDFs plus an xlsx and a png (Linux/Windows PrivEsc, AD, web, pivoting, methodology, walkthroughs) in `99 - Attachments/Cheatsheets/`, mapped to the vault notes they support.
 - [[Misc|🧰 Misc — Quick Jump Index]] — fast landing page linking the cross-cutting basics (file transfer, shells, pivoting, cleanup) + inline file/content search.
 - [[Validation Register|✅ Validation Register]] — command/test status, review dates, and the time-sensitive exam-policy source.
 
@@ -158,7 +157,7 @@ sudo nmap -sC -sV -p<comma,list> $IP -oN nmap/services.txt
 ```
 
 ```bash
-# 3. Top UDP (SNMP/DNS/TFTP/SNMP live here and are easy to miss)
+# 3. Top UDP (SNMP/DNS/TFTP/NTP live here and are easy to miss)
 sudo nmap -sU --top-ports 100 $IP -oN nmap/udp.txt
 ```
 

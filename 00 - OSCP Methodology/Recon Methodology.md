@@ -9,7 +9,7 @@ Related: [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]] · [[Web Enum
 ## 🧠 NEW TARGET → THINK
 - **Full TCP range first** — the intended port is often *not* in the top 1000.
 - **Then targeted `-sC -sV`** on the ports you found.
-- **Don't skip UDP** — SNMP/DNS/TFTP/SNMP live there and are easy wins.
+- **Don't skip UDP** — SNMP/DNS/TFTP/NTP live there and are easy wins.
 - Every open port → **open its [[00 - START HERE (OSCP Playbook Index)|02 - Services]] note** and work the tree.
 - New hostname/domain → `/etc/hosts` → **re-enumerate** (vhosts, AD).
 
