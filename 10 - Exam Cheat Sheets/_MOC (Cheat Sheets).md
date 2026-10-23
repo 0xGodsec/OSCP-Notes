@@ -15,3 +15,6 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]].
 
 ## Rule
 If a sheet needs a paragraph of explanation, it belongs in its source note — keep these to commands and decision points only.
+
+## Open sheets in workflow order
+[[Nmap Cheat Sheet]] → [[Port → Action Cheat Sheet]] → [[Reverse Shell Cheat Sheet]] / [[File Transfer Cheat Sheet]] → the matching privilege-escalation or AD sheet → [[Credential Attacks Cheat Sheet]]. Use the full hub note whenever a result needs interpretation.

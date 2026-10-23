@@ -85,14 +85,14 @@ enum4linux-ng -A $IP | tee nmap/enum4linux.txt
 3. Crack/obtain a cred → authenticate to [[SMB]] / [[WinRM]] / [[RDP]]. With a cred, re-run rpcclient authenticated for deeper data.
 
 ## 🔁 FOUND → NEXT
-| FINDING | MEANING | NEXT | RESULT |
-|---|---|---|---|
-| Null session works | Anonymous enum | `enumdomusers`, `getdompwinfo` | userlist + policy |
-| Users listed | Spray/roast fuel | save to users.txt → AS-REP/spray | possible cred |
-| enumdomusers denied | Restricted | `--rid-brute` | users anyway |
-| Password policy w/ high/zero lockout | Safe to spray | netexec spray | cred |
-| Domain name + DC role | It's a DC | go [[Active Directory]] | Kerberos attacks |
-| rpcdump shows spooler | Coercion maybe | situational (advanced) | — |
+| FINDING                              | MEANING          | NEXT                             | RESULT            |
+| ------------------------------------ | ---------------- | -------------------------------- | ----------------- |
+| Null session works                   | Anonymous enum   | `enumdomusers`, `getdompwinfo`   | userlist + policy |
+| Users listed                         | Spray/roast fuel | save to users.txt → AS-REP/spray | possible cred     |
+| enumdomusers denied                  | Restricted       | `--rid-brute`                    | users anyway      |
+| Password policy w/ high/zero lockout | Safe to spray    | netexec spray                    | cred              |
+| Domain name + DC role                | It's a DC        | go [[Active Directory]]          | Kerberos attacks  |
+| rpcdump shows spooler                | Coercion maybe   | situational (advanced)           | —                 |
 
 ## 🚧 FAILED → NEXT
 | Problem | Do this |

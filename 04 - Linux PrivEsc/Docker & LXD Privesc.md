@@ -7,7 +7,7 @@ Part of [[Linux Privilege Escalation]]. Related: [[Sudo Abuse]] · [[Writable Fi
 ---
 
 ## 🧠 THINK
-- Check `id` for `docker`, `lxd`, or `lxc` groups — either = root-equivalent.
+- Check `id` for `docker`, `lxd`, or `lxc` groups — they are commonly root-equivalent, but validate that the daemon/socket and configuration are actually usable. Rootless Docker and hardened LXD setups can change the impact.
 - The trick is always the same: run a container that **mounts host `/`**, then `chroot`/read it as root.
 - No internet? Use an **already-present image**, or build/import a tiny one.
 
@@ -58,7 +58,7 @@ Inside: host `/` is at `/mnt/root`, owned by root → read/modify freely (add SU
 ## 🔁 FOUND → NEXT
 | FINDING | NEXT |
 |---|---|
-| `docker` group | `docker run -v /:/mnt ... chroot /mnt sh` → root |
+| `docker` group + usable rootful daemon | `docker run -v /:/mnt ... chroot /mnt sh` → root |
 | `lxd`/`lxc` group | privileged container + host disk mount → root |
 | Local image available | use it directly (no download needed) |
 | No image | build/import a minimal one from Kali |

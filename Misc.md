@@ -38,12 +38,30 @@ gci C:\Users\ -Recurse -Include local.txt,proof.txt -EA SilentlyContinue
 # by CONTENT
 Get-ChildItem C:\ -Recurse -EA SilentlyContinue | Select-String -Pattern "password" -List
 ```
+
 ```cmd
 :: CMD equivalents
 dir C:\ /s /b /a | findstr /i "\.txt$"
 where /r C:\ *.kdbx
 ```
 
+local.txt
+```
+dir C:\local.txt /s /b /a
+```
+
+```
+where /r C:\ local.txt
+```
+
+Proof.txt
+```
+dir C:\proof.txt /s /b /a
+```
+
+```
+where /r C:\ proof.txt
+```
 ### Linux
 ```bash
 find / -type f -iname "*.txt" 2>/dev/null          # by name (case-insensitive)

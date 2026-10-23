@@ -12,6 +12,23 @@
 4. Log every finding in your notes. When you find something, jump to that note's **FOUND → NEXT** table.
 5. When a service is exhausted (see its **STOP CONDITION**), move to the next port. Do **not** rabbit-hole.
 
+## 🧭 Linear box workflow — where to open next
+
+| You are here | Do this now | Then open |
+|---|---|---|
+| New target | Discover and scan the full attack surface | [[Recon Methodology]] → `02 - Services` |
+| Open port/service | Enumerate the specific service top-to-bottom | [[Services — Ordered Workflow]] |
+| Web/application surface | Map it, then match the observed input to a technique | [[Web Enumeration]] → [[Web Exploitation]] |
+| Shell or valid remote login | Stabilise access and collect the local-user proof | [[Shells]] |
+| Linux low-priv shell | Follow the low-priv → root sequence | [[Linux Privilege Escalation]] |
+| Windows low-priv shell | Follow the low-priv → SYSTEM sequence | [[Windows Privilege Escalation]] |
+| Domain context/credential | Switch from local methodology to AD | [[Active Directory]] |
+| Credential/hash/key | Classify, crack/pass, then test it everywhere | [[Credential Attacks]] |
+| Second network/NIC/internal-only service | Route traffic through the foothold | [[Pivoting and Port Forwarding]] |
+| A method fails or stalls | Use the matching recovery playbook, then rotate | [[Troubleshooting Methodology]] |
+
+**Rule:** a service note tells you *what to test on that service*; the table above tells you *where to go after each result*.
+
 ---
 
 ## 🗺️ Port → Service Quick Lookup
@@ -55,6 +72,7 @@ These are linked from every service note. They hold the shared techniques so ser
 | Note | Folder | Covers |
 |---|---|---|
 | [[Web Enumeration]] | `01 - Recon` | dir/vhost busting, source/JS, CMS, certs |
+| [[Services — Ordered Workflow]] | `02 - Services` | route an open port to its service-specific decision tree |
 | [[Linux Privilege Escalation]] | `04 - Linux PrivEsc` | sudo, SUID, cron, caps, kernel |
 | [[Windows Privilege Escalation]] | `05 - Windows PrivEsc` | tokens/potato, services, AlwaysInstallElevated, stored creds |
 | [[Active Directory]] | `06 - Active Directory` | AS-REP/Kerberoast, BloodHound, DCSync |
@@ -79,6 +97,7 @@ These are linked from every service note. They hold the shared techniques so ser
 08 - Shells & Payloads/            ← shells, upgrades, pivoting
 09 - Troubleshooting/              ← "it's not working" playbooks
 10 - Exam Cheat Sheets/            ← compact, scan-only kill-shot sheets
+11 - Tools/                        ← per-tool usage notes (impacket, mimikatz) used across every phase
 99 - Attachments/                  ← screenshots / images + Cheatsheets/ PDF library
 ```
 
@@ -86,6 +105,7 @@ These are linked from every service note. They hold the shared techniques so ser
 
 ## 📚 Reference Library
 - [[_MOC (Cheatsheets)|📚 Cheatsheets — PDF reference library]] — 71 study PDFs plus an xlsx and a png (Linux/Windows PrivEsc, AD, web, pivoting, methodology, walkthroughs) in `99 - Attachments/Cheatsheets/`, mapped to the vault notes they support.
+- [[_MOC (Tools)|🧰 Tools — per-tool usage notes]] — cross-cutting tool references ([[Impacket]], [[Mimikatz]]) that don't belong to a single service or phase.
 - [[Misc|🧰 Misc — Quick Jump Index]] — fast landing page linking the cross-cutting basics (file transfer, shells, pivoting, cleanup) + inline file/content search.
 - [[Validation Register|✅ Validation Register]] — command/test status, review dates, and the time-sensitive exam-policy source.
 

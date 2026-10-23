@@ -22,3 +22,10 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]].
 ## Reflex
 On RCE: listener up → reverse shell → **upgrade TTY** → transfer tools → loot → privesc.
 Condensed: [[Reverse Shell Cheat Sheet]] · [[File Transfer Cheat Sheet]].
+
+## Run this order after code execution
+1. Start the listener before triggering the payload.
+2. Use [[Reverse & Bind Shells]] to obtain a shell, then [[Shell Upgrade & TTY]] to stabilise it.
+3. Use [[File Transfer]] only for the tools/data needed for the next validated step.
+4. Enumerate the host and choose [[Linux Privilege Escalation]], [[Windows Privilege Escalation]], or [[Active Directory]].
+5. If the foothold has a second subnet, switch to [[Pivoting and Port Forwarding]].

@@ -89,6 +89,92 @@ snmpwalk -v2c -c public $IP 1.3.6.1.2.1.25.4.2.1.5   # process args (creds!)
 
 ---
 
+## 🔎 IDENTIFY AN UNKNOWN OID (don't guess — translate it)
+
+An OID is a path down the global naming tree. Decode `1.3.6.1.4.1.77.1.2.25`:
+```
+1.3.6.1       -> iso.org.dod.internet
+      .4.1    -> private.enterprises
+      .77     -> enterprise 77 = Microsoft / LAN Manager
+      .1.2.25 -> userTable.userName   (= Windows/LANMgr user accounts)
+```
+Install MIBs so tools print NAMES instead of raw numbers (disabled by default on kali):
+```bash
+sudo apt install snmp snmp-mibs-downloader && sudo download-mibs
+sudo sed -i 's/^mibs :/# mibs :/' /etc/snmp/snmp.conf
+```
+
+```bash
+snmpwalk -v2c -c public -m ALL $IP          # walk the tree WITH human-readable names
+```
+
+```bash
+snmptranslate 1.3.6.1.4.1.77.1.2.25          # number -> name
+snmptranslate -On SNMPv2-MIB::sysDescr.0     # name   -> number
+snmptranslate -Td 1.3.6.1.4.1.77.1.2.25      # full description of the node
+```
+
+```bash
+snmpwalk -v2c -c public $IP .1               # walk from ROOT to discover every enumerable branch
+```
+**Workflow:** run `snmp-check` first (it labels everything for you). Only drop to raw OIDs + `snmptranslate` when you want to chase a specific branch `snmp-check` didn't show.
+
+---
+
+## 📑 ALL IMPORTANT OIDs (full reference)
+
+> ⭐ = top priority on the exam. All queryable with `snmpwalk -v2c -c public $IP <OID>`.
+
+**System info — MIB-2 `1.3.6.1.2.1.1`**
+| OID | Data |
+|---|---|
+| `1.3.6.1.2.1.1.1.0` | ⭐ `sysDescr` — OS + kernel/version banner |
+| `1.3.6.1.2.1.1.2.0` | `sysObjectID` — vendor/device type |
+| `1.3.6.1.2.1.1.3.0` | `sysUpTime` |
+| `1.3.6.1.2.1.1.4.0` | `sysContact` — admin email/name (user hints) |
+| `1.3.6.1.2.1.1.5.0` | ⭐ `sysName` — hostname |
+| `1.3.6.1.2.1.1.6.0` | `sysLocation` |
+
+**Host Resources — `1.3.6.1.2.1.25` (users/procs/software/disk)**
+| OID | Data |
+|---|---|
+| `1.3.6.1.2.1.25.1.5.0` | `hrSystemNumUsers` — logged-in user count |
+| `1.3.6.1.2.1.25.1.6.0` | `hrSystemProcesses` — process count |
+| `1.3.6.1.2.1.25.2.3.1.3` | `hrStorageDescr` — disks / mounts |
+| `1.3.6.1.2.1.25.4.2.1.2` | ⭐ `hrSWRunName` — running programs |
+| `1.3.6.1.2.1.25.4.2.1.4` | `hrSWRunPath` — process executable path |
+| `1.3.6.1.2.1.25.4.2.1.5` | ⭐⭐ `hrSWRunParameters` — **process command-line ARGS (creds leak here)** |
+| `1.3.6.1.2.1.25.6.3.1.2` | ⭐ `hrSWInstalledName` — installed software → CVEs |
+
+**Network — MIB-2 `1.3.6.1.2.1`**
+| OID | Data |
+|---|---|
+| `1.3.6.1.2.1.2.2.1.2` | `ifDescr` — network interfaces |
+| `1.3.6.1.2.1.4.20.1.1` | `ipAdEntAddr` — host IP addresses |
+| `1.3.6.1.2.1.4.21.1.1` | `ipRouteDest` — routing table (pivot targets) |
+| `1.3.6.1.2.1.4.22.1.2` | `ipNetToMedia` — ARP table / MACs (other live hosts) |
+| `1.3.6.1.2.1.6.13.1.3` | ⭐ `tcpConnLocalPort` — listening TCP ports |
+| `1.3.6.1.2.1.7.5.1.2` | `udpLocalPort` — listening UDP ports |
+
+**Windows / LAN Manager — enterprise `1.3.6.1.4.1.77`**
+| OID | Data |
+|---|---|
+| `1.3.6.1.4.1.77.1.2.25` | ⭐ user accounts (`userName`) → build users.txt |
+| `1.3.6.1.4.1.77.1.2.3.1.1` | network shares |
+| `1.3.6.1.4.1.77.1.2.27` | logged-in / session users |
+
+**Net-SNMP extend/exec — enterprise `1.3.6.1.4.1.2021` & `.8072` (Linux goldmine)**
+| OID | Data |
+|---|---|
+| `1.3.6.1.4.1.2021.8.1.101` | ⭐ `extOutput` — output of admin-configured `exec` scripts (can leak creds / command output) |
+| `1.3.6.1.4.1.8072.1.3.2.3.1.2` | ⭐ `nsExtendOutputFull` — output of `extend` directives (NET-SNMP-EXTEND-MIB) |
+| `1.3.6.1.4.1.2021.4` | memory stats (`memory` directive) |
+| `1.3.6.1.4.1.2021.9` | disk usage (`disk` directive) |
+
+> If `sysDescr` shows a net-snmp daemon, ALWAYS walk `1.3.6.1.4.1.2021` and `1.3.6.1.4.1.8072` — admins wire scripts to `exec`/`extend` and their raw output (sometimes with passwords, API keys, or full command results) is readable through SNMP.
+
+---
+
 ## 🗡️ EXPLOIT
 
 - 🟢 **Info disclosure via read community** → users, software, creds in process args.

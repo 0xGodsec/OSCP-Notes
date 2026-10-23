@@ -17,3 +17,9 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]].
 - ~20–30 min of true dead-air on a service → move on, come back later.
 - 90% of "stuck" is missed enumeration — re-read your own notes first.
 - Every credential → test on **every** other service ([[Credential Attacks]]).
+
+## Use this order when blocked
+1. Identify the failure class: connectivity/ports, shell, credentials, exploit, or tooling.
+2. Open the matching note above and complete its short checks.
+3. If it remains unresolved after the service time-box, preserve the evidence and move to a different service/host.
+4. Return when a new credential, hostname, route, or version changes the conditions.

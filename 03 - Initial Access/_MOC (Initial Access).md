@@ -17,3 +17,10 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]].
 
 ## Handoff
 Every success here → get a proper reverse shell ([[Shells]]) → identify OS → [[Linux Privilege Escalation]] / [[Windows Privilege Escalation]]; loot creds → [[Credential Attacks]].
+
+## Run this order for a web application
+1. [[Web Enumeration]] — stack, version, content, vhosts, parameters, source, and credentials.
+2. [[Web Exploitation]] — match the observed surface to a technique; do not test every technique blindly.
+3. Prioritise known version flaws, authentication weaknesses, and file upload paths before deeper injection testing.
+4. Validate one candidate, then follow its note: [[RCE]], [[File Upload]], [[SQL Injection]], [[LFI]], [[Command Injection]], [[SSTI]], [[SSRF]], or [[RFI]].
+5. On code execution, stop probing and use [[Shells]]; on credentials, use [[Credential Attacks]].

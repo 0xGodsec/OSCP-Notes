@@ -19,3 +19,12 @@ Recon (01) → per-open-port Service note (02) → Initial Access (03) → shell
    → PrivEsc (04/05, +06 if AD) → loot → Credentials reuse (07) → next host
 ```
 Support at every stage: [[Shells]] · [[Pivoting and Port Forwarding]] · `09 - Troubleshooting`.
+
+## Run this order on every target
+1. [[Exam Workflow]] — prepare evidence and time-boxes.
+2. [[Recon Methodology]] — full TCP, targeted fingerprinting, then UDP.
+3. [[Enumeration Methodology]] — work each open port using [[Services — Ordered Workflow]].
+4. [[Exploitation Methodology]] — validate the best evidence and get a foothold.
+5. [[Shells]] — stabilise access; then Linux/Windows/AD workflow as appropriate.
+6. [[Credential Attacks]] — reuse every credential and restart enumeration wherever it opens access.
+7. [[Troubleshooting Methodology]] — recover, rotate, and re-enumerate when blocked.

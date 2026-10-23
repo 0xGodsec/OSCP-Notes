@@ -14,3 +14,10 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]].
 - `export IP=...` once; `mkdir nmap` before `-oN`.
 - Every new hostname/vhost → add to `/etc/hosts`, re-enumerate.
 - A new open port = open its `02 - Services` note and work the decision tree.
+
+## Run this order
+1. [[Host Discovery]] if scanning a subnet; use `-Pn` when discovery is blocked.
+2. [[Port Scanning]] — full TCP, targeted `-sC -sV`, then UDP.
+3. [[OS & Service Fingerprinting]] — confirm versions and map every port.
+4. For HTTP(S), immediately run [[Web Enumeration]]. For every other port, use [[Services — Ordered Workflow]].
+5. New hostname, vhost, credential, or internal route = return to the matching enumeration step.
