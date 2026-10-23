@@ -2,7 +2,7 @@
 
 > The end-to-end plan for exam day: point allocation, machine order, time-boxing, note-taking, screenshots, proof files, and reporting. Read this the morning of the exam. The *technical* how lives in the other notes; this is the **discipline** that stops you losing points to chaos.
 
-Related: [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]] · [[Recon Methodology]] · [[Enumeration Methodology]] · [[Exploitation Methodology]] · [[Troubleshooting Methodology]]
+Related: [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]] · [[Standalone Boxes — Exam Solve Guide]] · [[Exam AD Set — Solve Overview]] · [[Recon Methodology]] · [[Enumeration Methodology]] · [[Exploitation Methodology]] · [[Troubleshooting Methodology]]
 
 ---
 
