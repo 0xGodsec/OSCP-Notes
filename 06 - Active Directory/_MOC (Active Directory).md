@@ -23,6 +23,13 @@ Per-machine command playbooks for the AD set, keyed to the Landscape checklist. 
 - [[MS02 — Lateral Movement]] — reuse MS01 loot → PtH → harvest domain creds
 - [[DC01 — Domain Controller]] — DCSync → NTDS → domain owned
 
+## 🎓 Exam solve guides (how to solve it)
+Realistic "how to solve it in the exam" playbooks distilled from real solves — generalized methodology, no box-specific secrets.
+- [[Exam AD Set — Solve Overview]] — the recurring 3-machine chain + credential flow
+- [[MS01 — Exam Solve Guide (Foothold)]] — given cred → SeImpersonate/GodPotato → Kerberoast
+- [[MS02 — Exam Solve Guide (Lateral)]] — service cred → xp_cmdshell → DA hash (lsassy)
+- [[DC01 — Exam Solve Guide (Domain)]] — PtH DA → DCSync → proof
+
 ## Order
 identify DC → /etc/hosts + clock → user enum → AS-REP/spray → foothold cred → Kerberoast + BloodHound → lateral/local admin → DCSync → Golden Ticket.
 Condensed commands: [[Active Directory Cheat Sheet]]. Related: [[Kerberos]] · [[LDAP]] · [[SMB]].
