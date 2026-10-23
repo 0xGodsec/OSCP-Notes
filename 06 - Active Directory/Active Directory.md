@@ -2,7 +2,7 @@
 
 > AD is its own world on the OSCP exam (the dedicated AD set). Spot a **domain** (DC = 88+389+445+53+135+3268) → switch to AD methodology. This is the index — set up, then follow the chain: enumerate → foothold cred → roast/spray → BloodHound → escalate → own the domain.
 
-Related: [[AD Attack Framework]] · [[SMB]] · [[Kerberos]] · [[LDAP]] · [[Credential Attacks]] · [[Windows Privilege Escalation]] · [[WinRM]] · [[Pivoting and Port Forwarding]]
+Related: [[AD Attack Framework]] · [[Which AD Attack, When]] · [[SMB]] · [[Kerberos]] · [[LDAP]] · [[Credential Attacks]] · [[Windows Privilege Escalation]] · [[WinRM]] · [[Pivoting and Port Forwarding]]
 
 ---
 
