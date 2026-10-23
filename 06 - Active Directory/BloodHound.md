@@ -2,7 +2,7 @@
 
 > Collect the domain's users/groups/ACLs/sessions and let BloodHound **draw the shortest path to Domain Admin**. It turns "I have a cred" into "here is the exact chain to own the domain." Run it as soon as you have any valid credential.
 
-Part of [[Active Directory]]. Related: [[AD Enumeration]] · [[AD ACL Abuse]] · [[AD Lateral Movement]] · [[DCSync & Domain Dominance]]
+Part of [[Active Directory]]. **Deep dive:** [[BloodHound — Master Reference]] (all collection methods, Cypher query library, full edge→abuse catalog). Related: [[AD Enumeration]] · [[AD ACL Abuse]] · [[AD Lateral Movement]] · [[DCSync & Domain Dominance]]
 
 ---
 
