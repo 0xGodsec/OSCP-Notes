@@ -23,7 +23,7 @@ nmap -p5900-5906 -sV --script vnc-info,realvnc-auth-bypass $IP
 ```
 
 ```bash
-vncviewer $IP:5900         # try connecting (no auth?) — needs a GUI on Kali
+vncviewer $IP::5900         # try connecting (no auth?) — needs a GUI on Kali
 ```
 **Verdict:** connects with no/weak auth → you have a desktop. Auth required → crack or find the stored password.
 
@@ -33,7 +33,7 @@ nmap -p5900-5910 -sV --script vnc-info,vnc-title,realvnc-auth-bypass $IP
 ```
 
 ```bash
-vncviewer $IP:5900         # or $IP:1 style (display number)
+vncviewer $IP::5900         # or $IP:1 style (display number)
 # Metasploit checks:
 #   auxiliary/scanner/vnc/vnc_none_auth     -> no-auth instances
 #   auxiliary/scanner/vnc/vnc_login         -> password brute
@@ -58,7 +58,7 @@ vncpwd ~/.vnc/passwd            # or the 'vncpwd' tool on the recovered file
 
 ```bash
 # No/weak auth -> desktop
-vncviewer $IP:5900
+vncviewer $IP::5900
 ```
 
 ```bash
@@ -67,7 +67,7 @@ hydra -P passwords.txt vnc://$IP
 ```
 
 ```bash
-vncviewer $IP:5900          # enter cracked password
+vncviewer $IP::5900          # enter cracked password
 ```
 
 ```bash
@@ -106,7 +106,7 @@ nmap -p5900-5910 -sV --script vnc-info,realvnc-auth-bypass $IP
 ```
 
 ```bash
-vncviewer $IP:5900                     # no/weak auth
+vncviewer $IP::5900                     # no/weak auth
 ```
 
 ```bash
