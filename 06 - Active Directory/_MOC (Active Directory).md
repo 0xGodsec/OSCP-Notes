@@ -15,6 +15,13 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Working hub: 
 - [x] [[DCSync & Domain Dominance]] — DCSync/NTDS/Golden Ticket
 - [x] [[ADCS (Certipy)]] — certificate template abuse (ESC1/ESC8…) → cert → NT hash
 
+## 🖥️ Machine notes (lab runbooks)
+Per-machine command playbooks for the AD set, keyed to the Landscape checklist. Placeholders (`<IP>`, `<cred>`, `# paste output`, `![[…png]]`) are filled from your own verified run — nothing pre-populated.
+- [[AD Attack Path — MS01 to DC01]] — **combined overview** (chain + credential-flow map)
+- [[MS01 — Initial Foothold]] — recon → foothold → local SYSTEM → loot
+- [[MS02 — Lateral Movement]] — reuse MS01 loot → PtH → harvest domain creds
+- [[DC01 — Domain Controller]] — DCSync → NTDS → domain owned
+
 ## Order
 identify DC → /etc/hosts + clock → user enum → AS-REP/spray → foothold cred → Kerberoast + BloodHound → lateral/local admin → DCSync → Golden Ticket.
 Condensed commands: [[Active Directory Cheat Sheet]]. Related: [[Kerberos]] · [[LDAP]] · [[SMB]].
