@@ -59,6 +59,35 @@ A cracked **service-account** password (e.g. an `MSSQL/...` or `HTTP/...` SPN) i
 ## ➡️ Handoff
 Carry the cracked **service cred** + every local hash to [[MS02 — Exam Solve Guide (Lateral)]].
 
+## 🧩 Real-world problems & fixes
+
+### The given credential "doesn't work"
+- **Try every form + protocol** before concluding it's wrong — a cred that fails one service often wins another:
+```bash
+nxc smb $IP -u "$U" -p "$P"            # also: winrm / rdp / mssql / ldap
+nxc smb $IP -u "$U" -p "$P" --local-auth     # it may be a LOCAL account, not domain
+# username forms: user · DOMAIN\user · user@domain.tld · .\user
+```
+- **Clock skew / name** (`KRB_AP_ERR_SKEW`, `PRINCIPAL_UNKNOWN`) → `sudo ntpdate $IP`, add FQDN to `/etc/hosts`, use the domain FQDN not the IP ([[Credentials Rejected]]).
+- Still nothing → the cred may be for a **different box** in the set — hold it and reuse once you can reach the others.
+
+### No `SeImpersonate` on the foothold box
+- Run the full sweep: `powershell -ep bypass ". .\PowerUp.ps1; Invoke-AllChecks"` and `winPEAS` → unquoted service paths / weak service perms ([[Windows Service Exploits]]), **AlwaysInstallElevated** ([[AlwaysInstallElevated]]), stored creds (`cmdkey /list`, unattend, PS history → [[Windows Stored Credentials]]), `SeBackup`/`SeRestore` ([[Windows Special Privileges]]), scheduled tasks.
+- Potato won't fire → wrong Potato for the build; **GodPotato** has the widest coverage; confirm the privilege is *Enabled*, not just present.
+
+### Tooling blocked (AV even on the foothold box)
+- GodPotato/`nc.exe` deleted on write → run from a user-writable dir, rename the binary, or use **PrintSpoofer** / **RunasCs** instead; worst case reverse-shell via a LOLBIN.
+
+### Kerberoast/enum returns nothing
+- `KRB_AP_ERR_SKEW` → `sudo ntpdate <DC>` first, use FQDN. `GetUserSPNs` empty → try `nxc ldap <DC> -u .. -p .. --kerberoasting out.txt`; **no SPN accounts at all** → fall back to [[AS-REP Roasting]], or local-privesc here for fresh creds.
+- BloodHound collection fails (DNS/skew) → `-ns <DC>`, `/etc/hosts`, `ntpdate`.
+
+### Can't reach the DC / internal hosts
+- You haven't pivoted yet — the inner subnet is only reachable **through MS01**: stand up the ligolo route (or SSH `-D`), then `proxychains -q <tool> -sT -Pn` ([[Pivoting and Port Forwarding]] · [[Proxychains & SOCKS]]). Add internal names to `/etc/hosts`.
+
+### A hash won't crack
+- Don't — **pass it**. A local Administrator NT hash from MS01's SAM is frequently reused across the whole set ([[Pass-the-Hash]] · [[Credential Reuse]]).
+
 ## 🔑 Exam reminders
 - **Clock sync + `/etc/hosts`** before any Kerberos step, or it fails cryptically.
 - Given a domain user → **try it on SSH *and* WinRM** first; don't brute.
