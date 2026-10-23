@@ -2,7 +2,7 @@
 
 > External reference PDFs (73 files) that back up the markdown vault. These are **study/reference material**, not the working notes — open them from Obsidian's file explorer in this folder. Each group links to the vault note it supports.
 
-Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Folder: `99 - Attachments/Cheetsheets/`.
+Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Folder: `99 - Attachments/Cheatsheets/`.
 
 ---
 

