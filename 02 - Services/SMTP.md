@@ -15,7 +15,7 @@ Related: [[Credential Attacks]] · [[SMB]] · [[SSH]] · [[HTTP]]
 
 ## ⚡ QUICK TRIAGE (60 sec)
 ```bash
-export IP=10.10.10.10
+export IP=192.168.235.156
 ```
 
 ```bash

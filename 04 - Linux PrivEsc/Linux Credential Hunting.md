@@ -23,7 +23,7 @@ cat /home/*/.bash_history 2>/dev/null
 ```
 SSH private keys (yours + other users):
 ```bash
-find / -name id_rsa -o -name id_dsa -o -name '*.pem' 2>/dev/null
+find / \( -name id_rsa -o -name id_dsa -o -name '*.pem' \) 2>/dev/null
 ```
 Recursive secret grep across common dirs:
 ```bash
@@ -35,7 +35,7 @@ find / \( -name '*.conf' -o -name '*.config' -o -name '.env' -o -name 'wp-config
 ```
 Backups / old files (often cleartext):
 ```bash
-find / -name '*.bak' -o -name '*.old' -o -name '*.sql' -o -name '*.kdbx' 2>/dev/null
+find / \( -name '*.bak' -o -name '*.old' -o -name '*.sql' -o -name '*.kdbx' \) 2>/dev/null
 ```
 `/etc/passwd` (users; crackable hashes if unshadowed):
 ```bash

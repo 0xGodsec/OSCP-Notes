@@ -15,3 +15,9 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Working hub: 
 ## Order
 find ([[Finding Credentials]]) → crack ([[Hash Cracking]]) or pass ([[Pass-the-Hash]]) → spray ([[Password Spraying]]) → **reuse on every service & host** ([[Credential Reuse]]).
 Condensed commands: [[Credential Attacks Cheat Sheet]].
+
+## Credential loop
+1. Record the exact artifact and source: username, plaintext password, hash, key, ticket, or config.
+2. Classify it. Plaintext → [[Credential Reuse]]; NT hash → [[Pass-the-Hash]]; crackable hash/key → [[Hash Cracking]]; username-only → [[Finding Credentials]] / [[Password Spraying]].
+3. Test valid credentials against every enumerated service and host within the authorized scope.
+4. Each new login, share, or shell restarts enumeration and the relevant privesc workflow.
