@@ -2,7 +2,7 @@
 
 > A **suite of Python tools** (runs on Kali, talks to Windows over the wire) for SMB/MSRPC/Kerberos. It's how you get code execution, dump hashes, and run Kerberos attacks with a **password, an NT hash, or a ticket** — no cracking needed. On Kali the binaries are prefixed `impacket-` (e.g. `impacket-psexec`).
 
-Part of [[Shells & Payloads]]. Related: [[Pass-the-Hash]] · [[Dumping Windows Hashes]] · [[Kerberoasting]] · [[AS-REP Roasting]] · [[Active Directory]] · [[Mimikatz]]
+Part of [[Shells]]. Related: [[Pass-the-Hash]] · [[Dumping Windows Hashes]] · [[Kerberoasting]] · [[AS-REP Roasting]] · [[Active Directory]] · [[Mimikatz]]
 
 ---
 
