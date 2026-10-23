@@ -6,6 +6,7 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Working hub: 
 
 ## Notes in this folder
 - [x] [[Active Directory]] — **hub / index** (setup, the chain, router)
+- [x] [[AD Attack Framework]] — the 9-position anti-stuck model (where am I → what's my move)
 - [x] [[AD Enumeration]] — unauth users + authed dump (SMB/LDAP/RPC/kerbrute)
 - [x] [[AS-REP Roasting]] — no-creds roast → `-m 18200`
 - [x] [[Kerberoasting]] — 1 cred → SPN roast → `-m 13100`
