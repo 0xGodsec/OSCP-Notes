@@ -150,6 +150,8 @@ MATCH p=(x {name:'USER@DOMAIN.TLD'})-[r]->(y) RETURN p
 
 > Built-in queries cover most of this too (*Shortest Paths to Domain Admins*, *…from Owned Principals*, *Find Kerberoastable Accounts*, *Find Computers with Unconstrained Delegation*, *Find AS-REP Roastable Users*, *Shortest Path to High Value Targets*). Use those first; drop to raw Cypher when you need a custom angle.
 
+> 💡 **On BloodHound CE?** Pre-load these as one-click saved-query buttons before exam day: [[BloodHound — Custom Cypher Queries (CE)]] (15 queries + bulk-import loader).
+
 ---
 
 ## 🧭 EDGE → ABUSE (read an edge, know the command)
