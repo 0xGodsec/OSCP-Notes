@@ -7,6 +7,7 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]].
 ## Notes in this folder
 - [x] [[Exam Workflow]] — end-to-end exam day: time-boxing, box order, note-taking, screenshots, proof files, reporting.
 - [x] [[Standalone Boxes — Exam Solve Guide]] — the repeatable recon → foothold → privesc → proof loop for the 3 standalones (with commands).
+- [x] [[_MOC (Standalone Scenarios)]] — worked standalone-box scenarios (port picture → route + reasoning); pattern-matching practice.
 - [x] [[Recon Methodology]] — the scanning game plan (full TCP → targeted `-sC -sV` → UDP → re-scan on new info). Links to [[00 - START HERE (OSCP Playbook Index)|Universal First Moves]] and `01 - Recon`.
 - [x] [[Enumeration Methodology]] — per-service enumeration discipline: what "exhausted" means, MUST-CHECK vs OPTIONAL, avoiding rabbit holes.
 - [x] [[Exploitation Methodology]] — from vuln → validated → exploited → shell; searchsploit workflow, adapting public PoCs, staying in scope.
