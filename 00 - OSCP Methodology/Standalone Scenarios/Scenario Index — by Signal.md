@@ -26,6 +26,7 @@ Back to [[_MOC (Standalone Scenarios)]] · method [[Standalone Boxes — Exam So
 | **`Index of /`** (directory listing) | writable upload? → webshell | [[Scenario 03 — FTP + Apache Index (vsftpd 3.0.5)]] |
 | **Named CMS** admin login (e.g. WBCE `/admin/login/`) | get admin → authed RCE | [[Scenario 06 — WBCE CMS (authenticated RCE)]] |
 | **Functional app** (login/search/catalog/upload) | identify product → SQLi/upload/PoC | [[Scenario 09 — Library Education Portal (known web app)]] |
+| **Education/learning/coaching portal, LMS, school/course system** | same family → identify product → SQLi/upload/PoC | [[Scenario 09 — Library Education Portal (known web app)]] |
 | **WordPress** + a named **plugin** | the plugin is the hole → wpscan → plugin CVE | [[Scenario 11 — WordPress Mail Masta LFI]] |
 | **IIS 403 Forbidden** on a dir | bypass path/header/method or fuzz inside | [[Scenario 07 — 403 Forbidden Directory (IIS bypass)]] |
 

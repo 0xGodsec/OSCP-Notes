@@ -1,6 +1,8 @@
 # 📚 Scenario 09 — Library Education Portal (attack the app's features)
 
-> **Given:** a standalone serving a functional web app — a *"Library Education"* portal (catalog/login/registration, not a static brochure). Goal: foothold → root/SYSTEM + proof. Unlike [[Scenario 02 — Cloud Web Hosting (brochure page)]] (a decoy page), here you **attack the application directly**. Fill `<placeholders>` from your own run, invent nothing.
+> **Given:** a standalone serving a functional web app — a *"Library Education"* portal, or any themed CRUD site of the same shape: a **Teaching / Learning / Coaching Center**, a school/course/student management system, an LMS (catalog/login/registration, not a static brochure). Goal: foothold → root/SYSTEM + proof. Unlike [[Scenario 02 — Cloud Web Hosting (brochure page)]] (a decoy page), here you **attack the application directly**. Fill `<placeholders>` from your own run, invent nothing.
+>
+> 🔁 **This is the playbook for the whole "education / learning / coaching portal" family** — they're off-the-shelf PHP CRUD apps with near-identical bug classes. Same approach regardless of the theme on the banner.
 
 Part of [[_MOC (Standalone Scenarios)]]. Method: [[Standalone Boxes — Exam Solve Guide]] · [[Web Enumeration]]. Foothold: [[SQL Injection]] · [[File Upload]] · [[Web Exploitation]] · [[RCE]]. Then: [[Credential Attacks]] · [[Linux Privilege Escalation]] · [[Windows Privilege Escalation]].
 
