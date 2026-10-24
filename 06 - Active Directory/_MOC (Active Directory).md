@@ -13,6 +13,7 @@ Back to [[00 - START HERE (OSCP Playbook Index)|📁 START HERE]]. Working hub: 
 - [x] [[Kerberoasting]] — 1 cred → SPN roast → `-m 13100`
 - [x] [[BloodHound]] — collect + shortest path to Domain Admin
 - [x] [[BloodHound — Master Reference]] — deep dive: all collection methods, `DCOnly` fast path, Cypher query library, edge→abuse catalog
+- [x] [[BloodHound — Custom Cypher Queries (CE)]] — 15 pre-loadable one-click CE queries + bulk-import loader (exam accelerator)
 - [x] [[AD Lateral Movement]] — psexec/wmiexec/evil-winrm/PtH
 - [x] [[AD ACL Abuse]] — GenericAll/WriteDACL/ForceChangePassword/AddMember
 - [x] [[DCSync & Domain Dominance]] — DCSync/NTDS/Golden Ticket

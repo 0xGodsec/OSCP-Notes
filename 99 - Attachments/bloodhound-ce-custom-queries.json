@@ -1,0 +1,95 @@
+{
+  "_comment": "BloodHound CE custom Cypher queries for OSCP AD enumeration. Import via the loader script (load-bloodhound-ce-queries.sh) which POSTs each to /api/v2/saved-queries, or paste each 'query' into the CE Cypher tab and click Save. CE schema: owned = system_tags CONTAINS 'owned'; Tier Zero / high value = system_tags CONTAINS 'admin_tier_0'. Mark your foothold principals Owned first so the owned-aware queries work.",
+  "queries": [
+    {
+      "name": "OSCP · What can my OWNED do right now",
+      "category": "OSCP-Triage",
+      "description": "Every outbound control edge from principals you have marked Owned. Your immediate move list.",
+      "query": "MATCH p=(n)-[r]->(m) WHERE n.system_tags CONTAINS 'owned' RETURN p LIMIT 500"
+    },
+    {
+      "name": "OSCP · Shortest path OWNED -> Domain Admins",
+      "category": "OSCP-Triage",
+      "description": "The plan: how to get from what you hold to Domain Admins.",
+      "query": "MATCH (s) WHERE s.system_tags CONTAINS 'owned' MATCH (g:Group) WHERE g.name STARTS WITH 'DOMAIN ADMINS@' MATCH p=shortestPath((s)-[*1..]->(g)) RETURN p"
+    },
+    {
+      "name": "OSCP · Shortest path OWNED -> any Tier Zero",
+      "category": "OSCP-Triage",
+      "description": "Paths from owned to any high-value / Tier Zero object (DC, DA group, krbtgt, etc).",
+      "query": "MATCH (s) WHERE s.system_tags CONTAINS 'owned' MATCH (t) WHERE t.system_tags CONTAINS 'admin_tier_0' MATCH p=shortestPath((s)-[*1..]->(t)) RETURN p"
+    },
+    {
+      "name": "OSCP · Hosts my OWNED can shell (AdminTo/RDP/PSRemote)",
+      "category": "OSCP-Lateral",
+      "description": "Computers reachable for code execution from owned principals (incl. via group membership).",
+      "query": "MATCH p=(n)-[:AdminTo|CanRDP|CanPSRemote|MemberOf*1..]->(c:Computer) WHERE n.system_tags CONTAINS 'owned' RETURN p"
+    },
+    {
+      "name": "OSCP · Kerberoastable users",
+      "category": "OSCP-Creds",
+      "description": "All users with an SPN set (request + hashcat -m 13100).",
+      "query": "MATCH (u:User) WHERE u.hasspn=true RETURN u.name AS user, u.serviceprincipalnames AS spns ORDER BY u.name"
+    },
+    {
+      "name": "OSCP · Kerberoastable WITH path to DA (roast first)",
+      "category": "OSCP-Creds",
+      "description": "Service accounts worth cracking because they chain to Domain Admins.",
+      "query": "MATCH (u:User) WHERE u.hasspn=true MATCH (g:Group) WHERE g.name STARTS WITH 'DOMAIN ADMINS@' MATCH p=shortestPath((u)-[*1..]->(g)) RETURN p"
+    },
+    {
+      "name": "OSCP · AS-REP roastable users",
+      "category": "OSCP-Creds",
+      "description": "Users with pre-auth disabled (GetNPUsers -no-pass, hashcat -m 18200). No creds needed.",
+      "query": "MATCH (u:User) WHERE u.dontreqpreauth=true RETURN u.name ORDER BY u.name"
+    },
+    {
+      "name": "OSCP · Passwords in the description field",
+      "category": "OSCP-Creds",
+      "description": "Classic leak: cleartext creds left in AD object descriptions.",
+      "query": "MATCH (u:User) WHERE u.description IS NOT NULL AND u.description =~ '(?i).*(pass|pwd|cred|secret|pw:|login).*' RETURN u.name AS user, u.description AS description"
+    },
+    {
+      "name": "OSCP · Computers with a Domain Admin session",
+      "category": "OSCP-Lateral",
+      "description": "Own these hosts and dump LSASS to capture Domain Admin creds.",
+      "query": "MATCH p=(c:Computer)-[:HasSession]->(u:User)-[:MemberOf*1..]->(g:Group) WHERE g.name STARTS WITH 'DOMAIN ADMINS@' RETURN p"
+    },
+    {
+      "name": "OSCP · Unconstrained delegation computers",
+      "category": "OSCP-Delegation",
+      "description": "Coerce a DC to auth here, capture its TGT. High impact.",
+      "query": "MATCH (c:Computer) WHERE c.unconstraineddelegation=true RETURN c.name ORDER BY c.name"
+    },
+    {
+      "name": "OSCP · Constrained delegation (who -> which service)",
+      "category": "OSCP-Delegation",
+      "description": "S4U abuse candidates (getST -impersonate).",
+      "query": "MATCH p=(a)-[:AllowedToDelegate]->(c:Computer) RETURN p"
+    },
+    {
+      "name": "OSCP · Who can DCSync the domain",
+      "category": "OSCP-DomainDominance",
+      "description": "Principals holding GetChanges + GetChangesAll (secretsdump -just-dc).",
+      "query": "MATCH p=(n)-[:DCSync|GetChanges|GetChangesAll*1..]->(d:Domain) RETURN p"
+    },
+    {
+      "name": "OSCP · Shadow-credential targets from OWNED (AddKeyCredentialLink)",
+      "category": "OSCP-ACL",
+      "description": "Objects your owned principals can add key credentials to (certipy shadow / pywhisker -> PKINIT).",
+      "query": "MATCH p=(n)-[:AddKeyCredentialLink]->(m) WHERE n.system_tags CONTAINS 'owned' RETURN p"
+    },
+    {
+      "name": "OSCP · ACL edges from OWNED (GenericAll/Write/DACL/Owner/ForceChangePw/AddMember)",
+      "category": "OSCP-ACL",
+      "description": "All abusable ACL edges you currently hold.",
+      "query": "MATCH p=(n)-[:GenericAll|GenericWrite|WriteDacl|WriteOwner|Owns|ForceChangePassword|AddMember]->(m) WHERE n.system_tags CONTAINS 'owned' RETURN p"
+    },
+    {
+      "name": "OSCP · All Tier Zero objects",
+      "category": "OSCP-Recon",
+      "description": "Everything the domain treats as crown jewels - your objectives list.",
+      "query": "MATCH (n) WHERE n.system_tags CONTAINS 'admin_tier_0' RETURN n.name AS name, labels(n) AS type ORDER BY name"
+    }
+  ]
+}
