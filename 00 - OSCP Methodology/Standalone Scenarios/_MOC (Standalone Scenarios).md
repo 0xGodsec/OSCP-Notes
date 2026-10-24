@@ -6,6 +6,7 @@ Back to [[_MOC (Methodology)]] · [[00 - START HERE (OSCP Playbook Index)|📁 S
 
 ## Scenarios
 - [[Scenario 01 — Roundcube Mail Server]] — `22,25,43,80,110,143,443,3306`, Roundcube 1.4.2. Mail-cred chain vs. direct MTA (Exim) RCE.
+- [[Scenario 02 — Cloud Web Hosting (brochure page)]] — static hosting template, nothing else known. Recon-from-zero: brochure is a decoy → enumerate hidden surface (dirs + vhosts + panel ports) → branch to the foothold.
 
 ## How to use
 1. Read the **ports** and say out loud what the box probably is before scrolling.
