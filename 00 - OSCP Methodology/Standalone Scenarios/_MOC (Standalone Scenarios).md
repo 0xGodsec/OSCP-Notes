@@ -8,6 +8,7 @@ Back to [[_MOC (Methodology)]] · [[00 - START HERE (OSCP Playbook Index)|📁 S
 - [[Scenario 01 — Roundcube Mail Server]] — `22,25,43,80,110,143,443,3306`, Roundcube 1.4.2. Mail-cred chain vs. direct MTA (Exim) RCE.
 - [[Scenario 02 — Cloud Web Hosting (brochure page)]] — static hosting template, nothing else known. Recon-from-zero: brochure is a decoy → enumerate hidden surface (dirs + vhosts + panel ports) → branch to the foothold.
 - [[Scenario 03 — FTP + Apache Index (vsftpd 3.0.5)]] — `21,22,80` Ubuntu, `Index of /` on web. Anon FTP → write-to-webroot check → upload PHP shell → trigger over HTTP (no vsftpd CVE — config, not exploit).
+- [[Scenario 04 — Windows Web + RDP (80,443,3389)]] — Windows standalone, web is the only door. Web RCE → low-priv → `SeImpersonate`→GodPotato→SYSTEM, or creds→RDP→privesc.
 
 ## How to use
 1. Read the **ports** and say out loud what the box probably is before scrolling.
