@@ -11,6 +11,8 @@ Back to [[_MOC (Methodology)]] · [[00 - START HERE (OSCP Playbook Index)|📁 S
 - [[Scenario 04 — Windows Web + RDP (80,443,3389)]] — Windows standalone, web is the only door. Web RCE → low-priv → `SeImpersonate`→GodPotato→SYSTEM, or creds→RDP→privesc.
 - [[Scenario 05 — Windows Multi-Service (SMB, Postgres, WinRM, RDP)]] — `80,135,139,443,445,3389,5432,5985`. Breadth-first: Postgres default-cred `COPY FROM PROGRAM` RCE / SMB null share → one credential reused across SMB/WinRM/RDP → SeImpersonate→SYSTEM.
 - [[Scenario 06 — WBCE CMS (authenticated RCE)]] — WBCE CMS admin login at `/admin/login/`. Two-step: get admin creds (default/looted) → authenticated RCE (Droplets PHP / module upload) → web shell → loot DB config → privesc.
+- [[Scenario 07 — 403 Forbidden Directory (IIS bypass)]] — restricted dir returns IIS 403. Bypass the path (slashes/dots/case, `X-Original-URL`, method swap) or fuzz files inside it (+ IIS 8.3 short-name) → hidden content = foothold → SeImpersonate→SYSTEM.
+- [[Scenario 08 — Anonymous FTP leaks db_connect.php]] — anon FTP exposes `db_connect.php` with DB creds. Reuse-first: test the password across SSH/WinRM/SMB/web/DB; DB login dumps crackable hashes or gives RCE (`INTO OUTFILE`/`xp_cmdshell`/`COPY PROGRAM`) → privesc.
 
 ## How to use
 1. Read the **ports** and say out loud what the box probably is before scrolling.
