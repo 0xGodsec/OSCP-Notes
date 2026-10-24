@@ -103,6 +103,26 @@ These are linked from every service note. They hold the shared techniques so ser
 
 **Flow on a box:** `00 - OSCP Methodology` (process) → `01 - Recon` (scan) → `02 - Services` (per open port) → `03 - Initial Access` (get a shell) → `04/05` PrivEsc (+ `06` if AD) → loop with `07 - Credentials`. `08` and `09` support every stage; `10` is your exam-day quick reference.
 
+## 🗺️ Folder Maps of Content
+
+Every folder has a `_MOC` index listing its notes — jump straight into any area:
+
+| # | Folder | Map of Content |
+|---|---|---|
+| 00 | OSCP Methodology | [[_MOC (Methodology)]] |
+| 01 | Recon | [[_MOC (Recon)]] |
+| 02 | Services | [[Services — Ordered Workflow]] (acts as the folder index) |
+| 03 | Initial Access | [[_MOC (Initial Access)]] |
+| 04 | Linux PrivEsc | [[_MOC (Linux PrivEsc)]] |
+| 05 | Windows PrivEsc | [[_MOC (Windows PrivEsc)]] |
+| 06 | Active Directory | [[_MOC (Active Directory)]] |
+| 07 | Credentials | [[_MOC (Credentials)]] |
+| 08 | Shells & Payloads | [[_MOC (Shells & Payloads)]] |
+| 09 | Troubleshooting | [[_MOC (Troubleshooting)]] |
+| 10 | Exam Cheat Sheets | [[_MOC (Cheat Sheets)]] |
+| 11 | Tools | [[_MOC (Tools)]] |
+| 99 | Attachments / Cheatsheets | [[_MOC (Cheatsheets)]] |
+
 ## 📚 Reference Library
 - [[_MOC (Cheatsheets)|📚 Cheatsheets — PDF reference library]] — 71 study PDFs plus an xlsx and a png (Linux/Windows PrivEsc, AD, web, pivoting, methodology, walkthroughs) in `99 - Attachments/Cheatsheets/`, mapped to the vault notes they support.
 - [[_MOC (Tools)|🧰 Tools — per-tool usage notes]] — cross-cutting tool references ([[Impacket]], [[Mimikatz]]) that don't belong to a single service or phase.
