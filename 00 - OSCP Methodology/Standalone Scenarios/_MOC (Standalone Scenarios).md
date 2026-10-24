@@ -13,6 +13,7 @@ Back to [[_MOC (Methodology)]] · [[00 - START HERE (OSCP Playbook Index)|📁 S
 - [[Scenario 06 — WBCE CMS (authenticated RCE)]] — WBCE CMS admin login at `/admin/login/`. Two-step: get admin creds (default/looted) → authenticated RCE (Droplets PHP / module upload) → web shell → loot DB config → privesc.
 - [[Scenario 07 — 403 Forbidden Directory (IIS bypass)]] — restricted dir returns IIS 403. Bypass the path (slashes/dots/case, `X-Original-URL`, method swap) or fuzz files inside it (+ IIS 8.3 short-name) → hidden content = foothold → SeImpersonate→SYSTEM.
 - [[Scenario 08 — Anonymous FTP leaks db_connect.php]] — anon FTP exposes `db_connect.php` with DB creds. Reuse-first: test the password across SSH/WinRM/SMB/web/DB; DB login dumps crackable hashes or gives RCE (`INTO OUTFILE`/`xp_cmdshell`/`COPY PROGRAM`) → privesc.
+- [[Scenario 09 — Library Education Portal (known web app)]] — functional CRUD web app (not a brochure). Identify the product → Exploit-DB PoC; SQLi the login/search, webshell the upload → dump+crack users or shell → loot DB config → privesc.
 
 ## How to use
 1. Read the **ports** and say out loud what the box probably is before scrolling.
