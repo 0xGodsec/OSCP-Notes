@@ -18,6 +18,10 @@ Back to [[_MOC (Methodology)]] · [[00 - START HERE (OSCP Playbook Index)|📁 S
 - [[Scenario 09 — Library Education Portal (known web app)]] — functional CRUD web app (not a brochure); **covers the whole education/learning/coaching-portal/LMS family**. Identify the product → Exploit-DB PoC; SQLi the login/search, webshell the upload → dump+crack users or shell → loot DB config → privesc.
 - [[Scenario 10 — Under Construction + builder fingerprint]] — "site in construction" with a named site-builder footer. Two levers: fingerprint the builder (default admin path / source / CVE) + enumerate the hidden surface (dirs/vhosts/.git) → real app = foothold.
 - [[Scenario 11 — WordPress Mail Masta LFI]] — WP 6.0.2 + Mail Masta plugin (`21,22,80,139,445`). Plugin = the hole: unauth LFI (CVE-2016-10956) → read `wp-config.php`/`id_rsa` → reuse creds on SSH, or LFI→RCE via log poisoning / FTP-SMB upload → privesc.
+- [[Scenario 12 — Anonymous FTP document & DB loot]] — anon FTP with business files (`.db`/PDF/CSV). Mine the files: `sqlite3 .dump`, `exiftool`/`pdftotext`, unzip+grep Office → harvest users/creds → reuse.
+- [[Scenario 13 — Unauthenticated Redis (6379) RCE]] — open Redis (no `requirepass`). Arbitrary file write → webshell (web root) / `authorized_keys` (.ssh) / cron, or Redis 4.x/5.x module-replication RCE → shell.
+- [[Scenario 14 — File Upload Portal (CV upload → webshell)]] — upload feature (CV/job portal). Bypass the filter (alt/double ext, content-type/magic-byte, `.htaccess`) + find the upload dir → webshell → RCE.
+- [[Scenario 15 — Laravel .env leak (anon FTP)]] — anon FTP leaks Laravel `.env`. Reuse `DB_PASSWORD` on SSH/MySQL, and turn `APP_DEBUG=true`/`APP_KEY` into RCE (Ignition CVE-2021-3129 / APP_KEY CVE-2018-15133).
 
 ## How to use
 1. Read the **ports** and say out loud what the box probably is before scrolling.

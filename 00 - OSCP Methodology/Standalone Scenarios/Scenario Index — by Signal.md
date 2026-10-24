@@ -10,6 +10,9 @@ Back to [[_MOC (Standalone Scenarios)]] · method [[Standalone Boxes — Exam So
 | You see | Signal | Scenario |
 |---|---|---|
 | **21 FTP** open | can you log in **anonymously**? | [[Scenario 03 — FTP + Apache Index (vsftpd 3.0.5)]] · [[Scenario 08 — Anonymous FTP leaks db_connect.php]] |
+| **Anon FTP with documents/`.db`** | mine the files (sqlite/pdf/office) | [[Scenario 12 — Anonymous FTP document & DB loot]] |
+| **Anon FTP with a `.env`** | Laravel keys → reuse + RCE | [[Scenario 15 — Laravel .env leak (anon FTP)]] |
+| **6379 Redis** (no auth) | file-write → webshell/SSH-key/cron, or module RCE | [[Scenario 13 — Unauthenticated Redis (6379) RCE]] |
 | **25 + 110 + 143** | full **mail stack** (SMTP/POP3/IMAP) | [[Scenario 01 — Roundcube Mail Server]] |
 | **80 / 443** only, **+ 3389** | web-only **Windows** box | [[Scenario 04 — Windows Web + RDP (80,443,3389)]] |
 | **445 + 5985 + 3389** together | Windows, **one cred opens 3 shells** | [[Scenario 05 — Windows Multi-Service (SMB, Postgres, WinRM, RDP)]] |
@@ -27,6 +30,8 @@ Back to [[_MOC (Standalone Scenarios)]] · method [[Standalone Boxes — Exam So
 | **Named CMS** admin login (e.g. WBCE `/admin/login/`) | get admin → authed RCE | [[Scenario 06 — WBCE CMS (authenticated RCE)]] |
 | **Functional app** (login/search/catalog/upload) | identify product → SQLi/upload/PoC | [[Scenario 09 — Library Education Portal (known web app)]] |
 | **Education/learning/coaching portal, LMS, school/course system** | same family → identify product → SQLi/upload/PoC | [[Scenario 09 — Library Education Portal (known web app)]] |
+| **Named "… Management System" login (FMS, HMS, etc.)** | same family → identify product → SQLi/default-cred/PoC | [[Scenario 09 — Library Education Portal (known web app)]] |
+| **File-upload field** (CV / avatar / docs) | bypass filter → webshell | [[Scenario 14 — File Upload Portal (CV upload → webshell)]] |
 | **WordPress** + a named **plugin** | the plugin is the hole → wpscan → plugin CVE | [[Scenario 11 — WordPress Mail Masta LFI]] |
 | **IIS 403 Forbidden** on a dir | bypass path/header/method or fuzz inside | [[Scenario 07 — 403 Forbidden Directory (IIS bypass)]] |
 
@@ -41,6 +46,9 @@ Back to [[_MOC (Standalone Scenarios)]] · method [[Standalone Boxes — Exam So
 | `vsftpd 3.0.5` / `2.0.8` | **not** the 2.3.4 backdoor → config/anon/loot path | [[Scenario 03 — FTP + Apache Index (vsftpd 3.0.5)]] · [[Scenario 11 — WordPress Mail Masta LFI]] |
 | `Exim 4.87–4.91` on 25 | **CVE-2019-10149 → root** | [[Scenario 01 — Roundcube Mail Server]] |
 | `?pl=` / Mail Masta / `csvexport.php` | **unauth LFI** (CVE-2016-10956) → `wp-config.php` | [[Scenario 11 — WordPress Mail Masta LFI]] |
+| `Redis … 4.0.14` / port 6379 | **unauth Redis** → file-write RCE | [[Scenario 13 — Unauthenticated Redis (6379) RCE]] |
+| `.env` with `APP_KEY` / `APP_DEBUG=true` | **Laravel** → reuse + Ignition/APP_KEY RCE | [[Scenario 15 — Laravel .env leak (anon FTP)]] |
+| `contractors.db` / a loose `.db`/`.sqlite` | open it: `sqlite3 .dump` → creds/PII | [[Scenario 12 — Anonymous FTP document & DB loot]] |
 
 ## 🖥️ By OS tell
 | Tell | OS | Privesc target |
