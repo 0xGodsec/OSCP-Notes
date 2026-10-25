@@ -56,6 +56,13 @@ Back to [[_MOC (Standalone Scenarios)]] · method [[Standalone Boxes — Exam So
 | 3389 / 445 / 5985 / `.aspx` / IIS | **Windows** | `whoami /priv` → **SeImpersonate → GodPotato** → SYSTEM |
 | 22 OpenSSH-Ubuntu / Apache-Ubuntu / vsftpd | **Linux** | `sudo -l` → SUID → cron → config creds → root |
 
+## 🪟 By Windows privesc signal (post-foothold)
+| You see | Signal | Scenario |
+|---|---|---|
+| **No `SeImpersonate`** + PowerUp/winPEAS flags a service | weak service ACL / unquoted path / writable binary or dir | [[Scenario 16 — Windows Service Hijacking → SYSTEM]] |
+| `SERVICE_CHANGE_CONFIG` / `SERVICE_ALL_ACCESS` on a service | `sc config binpath=` → SYSTEM | [[Scenario 16 — Windows Service Hijacking → SYSTEM]] |
+| Unquoted path with a space + writable prefix dir | plant `C:\...\Gap.exe` → restart | [[Scenario 16 — Windows Service Hijacking → SYSTEM]] |
+
 ---
 
 ## 🧠 Recurring meta-lessons (true on every scenario)

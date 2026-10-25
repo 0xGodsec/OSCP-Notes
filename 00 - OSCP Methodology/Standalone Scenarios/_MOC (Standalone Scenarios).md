@@ -22,6 +22,7 @@ Back to [[_MOC (Methodology)]] · [[00 - START HERE (OSCP Playbook Index)|📁 S
 - [[Scenario 13 — Unauthenticated Redis (6379) RCE]] — open Redis (no `requirepass`). Arbitrary file write → webshell (web root) / `authorized_keys` (.ssh) / cron, or Redis 4.x/5.x module-replication RCE → shell.
 - [[Scenario 14 — File Upload Portal (CV upload → webshell)]] — upload feature (CV/job portal). Bypass the filter (alt/double ext, content-type/magic-byte, `.htaccess`) + find the upload dir → webshell → RCE.
 - [[Scenario 15 — Laravel .env leak (anon FTP)]] — anon FTP leaks Laravel `.env`. Reuse `DB_PASSWORD` on SSH/MySQL, and turn `APP_DEBUG=true`/`APP_KEY` into RCE (Ignition CVE-2021-3129 / APP_KEY CVE-2018-15133).
+- [[Scenario 16 — Windows Service Hijacking → SYSTEM]] — **privesc lab drill** (not a foothold): low-priv Windows shell, no `SeImpersonate`. Enumerate with PowerUp/accesschk → weak service ACL (`sc config binpath=`) / unquoted path / writable binary / writable-dir DLL → restart the SYSTEM service → SYSTEM.
 
 ## How to use
 1. Read the **ports** and say out loud what the box probably is before scrolling.
